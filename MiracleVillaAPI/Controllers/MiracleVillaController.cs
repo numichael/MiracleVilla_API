@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MiracleVillaAPI.Data;
-using MiracleVillaAPI.Models;
 using MiracleVillaAPI.Models.Dto;
 
 namespace MiracleVillaAPI.Controllers
@@ -10,10 +9,16 @@ namespace MiracleVillaAPI.Controllers
     [ApiController]
     public class MiracleVillaController : ControllerBase
     {
+
+        public MiracleVillaController()
+        {  
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<VillaDTO>> GetVillas()
         {
+            
             return Ok(VillaStore.villaList);
         }
 
@@ -68,7 +73,7 @@ namespace MiracleVillaAPI.Controllers
             return CreatedAtRoute("GetVilla", new { Id = villaDTO.Id }, villaDTO);
         }
 
-        [HttpDelete("id", Name = "DeleteVilla")]
+        [HttpDelete("{id}", Name = "DeleteVilla")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -87,7 +92,7 @@ namespace MiracleVillaAPI.Controllers
             return NoContent();
         }
 
-        [HttpPut("id", Name = "UpdateVilla")]
+        [HttpPut("{id}", Name = "UpdateVilla")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult UpdateVilla(int id, [FromBody]VillaDTO villaDTO)
@@ -103,7 +108,7 @@ namespace MiracleVillaAPI.Controllers
             return NoContent();
         }
 
-        [HttpPatch("id", Name = "UpdatePartialVilla")]
+        [HttpPatch("{id}", Name = "UpdatePartialVilla")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
